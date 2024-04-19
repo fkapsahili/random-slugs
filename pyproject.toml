@@ -1,0 +1,64 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[project]
+name = "randomslugs"
+
+description = "A sample Python project"
+version = "1.0.0"
+
+readme = "README.md"
+
+requires-python = ">=3.8"
+
+license = {file = "LICENSE.txt"}
+
+authors = [{name = "Fabio Kapsahili", email = "fabio.kapsahili@protonmail.com"}]
+keywords = ["sample", "setuptools", "development"]
+maintainers = [
+  {name = "Fabio Kapsahili", email = "fabio.kapsahili@protonmail.com"},
+]
+
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Build Tools",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3 :: Only",
+]
+
+dependencies = ["peppercorn"]
+
+[project.optional-dependencies]
+dev = ["check-manifest"]
+test = ["coverage"]
+
+[project.urls]
+"Bug Reports" = "https://github.com/pypa/sampleproject/issues"
+"Funding" = "https://donate.pypi.org"
+"Homepage" = "https://github.com/pypa/sampleproject"
+"Say Thanks!" = "http://saythanks.io/to/example"
+"Source" = "https://github.com/pypa/sampleproject/"
+
+[project.scripts]
+sample = "randomslugs:main"
+
+[tool.hatch]
+package-data = {"randomslugs" = ["*.txt"]}
+
+[tool.ruff]
+line-length = 100
+select = ["A", "B", "E", "F", "I"]
+target-version = "py312"
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+log_cli_level = "DEBUG"
