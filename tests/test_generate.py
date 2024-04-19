@@ -47,6 +47,19 @@ class RandomSlugsTest(unittest.TestCase):
         )
         self.assertTrue(check_word_in_category("nouns", chunks[2], options["categories"]["nouns"]))
 
+    def test_if_random_seed_is_set_slug_should_be_equal(self):
+        options = {"seed": 42}
+        slug1 = generate_slug(options=options)
+        slug2 = generate_slug(options=options)
+        slug3 = generate_slug(options={"seed": 43})
+        self.assertEqual(slug1, slug2)
+        self.assertNotEqual(slug1, slug3)
+
+    def test_if_random_seed_is_set_slug_should_be_different(self):
+        slug1 = generate_slug()
+        slug2 = generate_slug()
+        self.assertNotEqual(slug1, slug2)
+
 
 class FormatSlugTest(unittest.TestCase):
     def test_kebab_case(self):

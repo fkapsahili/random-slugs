@@ -1,6 +1,18 @@
 from typing import List, Literal, Optional, Tuple, TypedDict
 
-Category = Literal["animal", "color"]
+Category = Literal[
+    "animal",
+    "color",
+    "transport",
+    "pokemon",
+    "technology",
+    "profession",
+    "thing",
+    "quantity",
+    "size",
+    "emotion",
+    "condition",
+]
 
 WordEntry = Tuple[str, List[Category]]
 
@@ -10,7 +22,7 @@ class Vocabulary(TypedDict):
     adjectives: List[WordEntry]
 
 
-vocabulary: Vocabulary = {
+vocabulary_kwargs = {
     "nouns": [
         ("tiger", ["animal", "color"]),
         ("elephant", ["animal", "color"]),
@@ -404,6 +416,8 @@ vocabulary: Vocabulary = {
         ("unforgiving", ["condition"]),
     ],
 }
+
+vocabulary = Vocabulary(**vocabulary_kwargs)
 
 
 def get_words_by_category(

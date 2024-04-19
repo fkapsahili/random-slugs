@@ -12,7 +12,8 @@ DEFAULT_NUMBER_OF_WORDS = 3
 DEFAULT_FORMAT_OPTION = "kebab"
 
 Options = TypedDict(
-    "Options", {"parts_of_speech": List[str], "categories": Dict, "format": FORMAT_OPTION}
+    "Options",
+    {"parts_of_speech": List[str], "categories": Dict, "format": FORMAT_OPTION, "seed": None},
 )
 
 
@@ -23,12 +24,14 @@ def generate_slug(num_of_words=DEFAULT_NUMBER_OF_WORDS, options: Options = None)
     if options is not None:
         opts.update(options)
 
+    if isinstance(opts["seed"], (int, str, float, bytes, bytearray)):
+        random.seed(opts["seed"])
+
     for part in opts["parts_of_speech"]:
         if part in opts["categories"]:
             categories = opts["categories"][part]
         else:
             categories = []
-        logger.debug(f"part: {part}, categories: {categories}")
         candidates = get_words_by_category(part, categories=categories)
         candidate = random.choice(candidates)
         words.append(candidate)
@@ -46,6 +49,7 @@ def _get_default_options(num_of_words=DEFAULT_NUMBER_OF_WORDS):
         "parts_of_speech": parts_of_speech,
         "categories": {},
         "format": DEFAULT_FORMAT_OPTION,
+        "seed": None,
     }
     return default_options
 
