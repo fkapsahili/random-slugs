@@ -34,6 +34,12 @@ jobs:
     - name: Build
       run: hatch build
 
+  release:
+    name: "Release"
+    runs-on: ubuntu-latest
+    needs: build
+    
+    steps:
     - name: Python Semantic Release
       uses: python-semantic-release/python-semantic-release@master
       with:
