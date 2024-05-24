@@ -3,7 +3,7 @@ build-backend = "hatchling.build"
 requires = ["hatchling"]
 
 [project]
-name = "randomslugs"
+name = "random-slugs"
 
 description = "A sample Python project"
 version = "1.0.0"
@@ -48,17 +48,20 @@ test = ["coverage"]
 "Source" = "https://github.com/pypa/sampleproject/"
 
 [project.scripts]
-sample = "randomslugs:main"
+sample = "random-slugs:main"
 
 [tool.hatch]
-package-data = {"randomslugs" = ["*.txt"]}
+package-data = {"random-slugs" = ["*.txt"]}
 
 [tool.ruff]
 line-length = 100
 target-version = "py312"
 
 [tool.ruff.lint]
-select = ["A", "B", "E", "F", "I"]
+select = ["A", "B", "E", "F", "I", "ANN"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["ANN"]
 
 [tool.pytest.ini_options]
 log_cli = true

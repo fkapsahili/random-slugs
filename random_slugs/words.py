@@ -1,4 +1,4 @@
-from typing import List, Literal, Optional, Tuple, TypedDict
+from typing import Literal, Tuple, TypedDict
 
 Category = Literal[
     "animal",
@@ -14,12 +14,12 @@ Category = Literal[
     "condition",
 ]
 
-WordEntry = Tuple[str, List[Category]]
+WordEntry = Tuple[str, list[Category]]
 
 
 class Vocabulary(TypedDict):
-    nouns: List[WordEntry]
-    adjectives: List[WordEntry]
+    nouns: list[WordEntry]
+    adjectives: list[WordEntry]
 
 
 vocabulary_kwargs = {
@@ -421,8 +421,8 @@ vocabulary = Vocabulary(**vocabulary_kwargs)
 
 
 def get_words_by_category(
-    part_of_speech: str, categories: Optional[List[Category]] = None
-) -> List[WordEntry]:
+    part_of_speech: str, categories: list[Category] | None = None
+) -> list[WordEntry]:
     words = []
     for word, word_categories in vocabulary[part_of_speech]:
         if categories:

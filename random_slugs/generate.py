@@ -1,6 +1,6 @@
 import logging
 import random
-from typing import Dict, List, Literal, TypedDict
+from typing import Literal, TypedDict
 
 from random_slugs.words import get_words_by_category
 
@@ -13,7 +13,7 @@ DEFAULT_FORMAT_OPTION = "kebab"
 
 Options = TypedDict(
     "Options",
-    {"parts_of_speech": List[str], "categories": Dict, "format": FORMAT_OPTION, "seed": None},
+    {"parts_of_speech": list[str], "categories": dict, "format": FORMAT_OPTION, "seed": None},
 )
 
 
@@ -33,7 +33,10 @@ class RandomSlugConfigError(RandomSlugsError):
     pass
 
 
-def generate_slug(num_of_words=DEFAULT_NUMBER_OF_WORDS, options: Options = None) -> str:
+def generate_slug(num_of_words: int = DEFAULT_NUMBER_OF_WORDS, options: Options = None) -> str:
+    """
+    Generates a random slug based on the given options.
+    """
     words = []
     opts = _get_default_options(num_of_words)
 
@@ -56,7 +59,7 @@ def generate_slug(num_of_words=DEFAULT_NUMBER_OF_WORDS, options: Options = None)
     return format_slug(words, opts["format"])
 
 
-def _get_default_parts_of_speech(num_of_words: int):
+def _get_default_parts_of_speech(num_of_words: int) -> list[str]:
     parts_of_speech = []
     for _ in range(num_of_words - 1):
         parts_of_speech.append("adjectives")
@@ -64,7 +67,7 @@ def _get_default_parts_of_speech(num_of_words: int):
     return parts_of_speech
 
 
-def _get_default_options(num_of_words=DEFAULT_NUMBER_OF_WORDS):
+def _get_default_options(num_of_words: int = DEFAULT_NUMBER_OF_WORDS) -> Options:
     default_options = {
         "parts_of_speech": _get_default_parts_of_speech(num_of_words),
         "categories": {},
@@ -74,7 +77,7 @@ def _get_default_options(num_of_words=DEFAULT_NUMBER_OF_WORDS):
     return default_options
 
 
-def _validate_options(options: Options):
+def _validate_options(options: Options) -> None:
     if "parts_of_speech" in options:
         for part in options["parts_of_speech"]:
             if part not in ["adjectives", "nouns"]:
@@ -91,7 +94,10 @@ def _validate_options(options: Options):
             raise RandomSlugConfigError(f"Invalid seed: {options['seed']}")
 
 
-def format_slug(words: List[str], fmt: FORMAT_OPTION = DEFAULT_FORMAT_OPTION) -> str:
+def format_slug(words: list[str], fmt: FORMAT_OPTION = DEFAULT_FORMAT_OPTION) -> str:
+    """
+    Formats a list of words into a slug based on the given format.
+    """
     if fmt == "kebab":
         return "-".join(words)
     elif fmt == "snake":
@@ -100,7 +106,9 @@ def format_slug(words: List[str], fmt: FORMAT_OPTION = DEFAULT_FORMAT_OPTION) ->
         return "".join([words[0]] + [word.capitalize() for word in words[1:]])
 
 
-def get_total_unique_slugs(number_of_words=DEFAULT_NUMBER_OF_WORDS, options: Options = None):
+def get_total_unique_slugs(
+    number_of_words: int = DEFAULT_NUMBER_OF_WORDS, options: Options = None
+) -> int:
     """
     Returns the total number of unique slugs that can be generated with the given options.
     """
