@@ -11,7 +11,6 @@ description = "A Python package for generating random slugs using a customizable
 dynamic = [
   "version",
 ]
-equires-python = ">=3.8"
 keywords = ["sample", "setuptools", "development"]
 license = {file = "LICENSE.txt"}
 maintainers = [
@@ -19,11 +18,11 @@ maintainers = [
 ]
 name = "random-slugs"
 readme = "README.md"
+requires-python = ">=3.9"
 
 classifiers = [
   "Intended Audience :: Developers",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
