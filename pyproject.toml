@@ -82,3 +82,6 @@ select = ["A", "B", "E", "F", "I", "ANN"]
 log_cli = true
 log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
 log_cli_level = "DEBUG"
+
+[tool.semantic_release]
+version_variables = ["random_slugs/__about__.py:__version__"]

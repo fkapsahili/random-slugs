@@ -39,6 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     permissions:
+      id-token: write
       contents: write
     
     steps:
@@ -54,6 +55,7 @@ jobs:
       uses: python-semantic-release/python-semantic-release@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        changelog: 'false'
 
     - name: Update Version with Hatch
       if: steps.release.outputs.released == 'true'
