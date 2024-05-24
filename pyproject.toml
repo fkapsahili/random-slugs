@@ -84,11 +84,28 @@ log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(linen
 log_cli_level = "DEBUG"
 
 [tool.semantic_release]
+allow_zero_versions = false
 commit_message = "chore(release): release v{version} [skip ci]"
-commit_parser = "angular"
 remove_dist = true
 tag_format = "v{version}"
 version_variables = ["random_slugs/__about__.py:__version__"]
+
+[tool.semantic_release.commit_parser_options]
+allowed_tags = [
+  "build",
+  "chore",
+  "ci",
+  "docs",
+  "feat",
+  "fix",
+  "perf",
+  "style",
+  "refactor",
+  "test",
+]
+major_tags = ["feat!"]
+minor_tags = ["feat"]
+patch_tags = ["fix", "perf"]
 
 [tool.semantic_release.branches.main]
 match = '(master|main)'
