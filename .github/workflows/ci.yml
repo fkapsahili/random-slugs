@@ -37,3 +37,6 @@ jobs:
     - name: Publish on PyPI
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       run: hatch publish
+      env:
+        HATCH_INDEX_USER: ${{ secrets.HATCH_INDEX_USER }}
+        HATCH_INDEX_AUTH: ${{ secrets.HATCH_INDEX_AUTH }}
