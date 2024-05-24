@@ -86,6 +86,7 @@ log_cli_level = "DEBUG"
 [tool.semantic_release]
 allow_zero_versions = false
 commit_message = "chore(release): release v{version} [skip ci]"
+major_on_zero = false
 remove_dist = true
 tag_format = "v{version}"
 version_variables = ["random_slugs/__about__.py:__version__"]
