@@ -3,28 +3,20 @@ build-backend = "hatchling.build"
 requires = ["hatchling"]
 
 [project]
-name = "random-slugs"
-
-description = "A sample Python project"
-version = "1.0.0"
-
-readme = "README.md"
-
-requires-python = ">=3.8"
-
-license = {file = "LICENSE.txt"}
-
 authors = [{name = "Fabio Kapsahili", email = "fabio.kapsahili@protonmail.com"}]
+description = "A Python package for generating random slugs using a customizable vocabulary of words."
+equires-python = ">=3.8"
 keywords = ["sample", "setuptools", "development"]
+license = {file = "LICENSE.txt"}
 maintainers = [
   {name = "Fabio Kapsahili", email = "fabio.kapsahili@protonmail.com"},
 ]
+name = "random-slugs"
+readme = "README.md"
+version = "1.0.0"
 
 classifiers = [
-  "Development Status :: 3 - Alpha",
   "Intended Audience :: Developers",
-  "Topic :: Software Development :: Build Tools",
-  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
@@ -41,17 +33,31 @@ dev = ["check-manifest"]
 test = ["coverage"]
 
 [project.urls]
-"Bug Reports" = "https://github.com/pypa/sampleproject/issues"
-"Funding" = "https://donate.pypi.org"
-"Homepage" = "https://github.com/pypa/sampleproject"
-"Say Thanks!" = "http://saythanks.io/to/example"
-"Source" = "https://github.com/pypa/sampleproject/"
-
-[project.scripts]
-sample = "random-slugs:main"
+"Bug Reports" = "https://github.com/fkapsahili/random-slugs/issues"
+"Homepage" = "https://github.com/fkapsahili/random-slugs"
+"Source" = "https://github.com/fkapsahili/random-slugs/"
 
 [tool.hatch]
 package-data = {"random-slugs" = ["*.txt"]}
+
+[tool.hatch.envs.test]
+dependencies = [
+  "pytest",
+]
+
+[[tool.hatch.envs.test.matrix]]
+python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
+
+[tool.hatch.envs.test.scripts]
+test = "pytest"
+
+[tool.hatch.envs.lint]
+dependencies = [
+  "ruff",
+]
+
+[tool.hatch.envs.lint.scripts]
+check = "ruff check ."
 
 [tool.ruff]
 line-length = 100
