@@ -85,3 +85,7 @@ log_cli_level = "DEBUG"
 
 [tool.semantic_release]
 version_variables = ["random_slugs/__about__.py:__version__"]
+
+[tool.semantic_release.branches.main]
+match = '(master|main)'
+prerelease = false
