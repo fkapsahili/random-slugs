@@ -30,3 +30,10 @@ jobs:
 
     - name: Tests
       run: hatch run +py=${{ matrix.python-version }} test:test
+
+    - name: Build
+      run: hatch build
+
+    - name: Publish on PyPI
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: hatch publish
