@@ -1,7 +1,12 @@
 import unittest
 
-from randomslugs.generate import format_slug, generate_slug
-from randomslugs.words import vocabulary
+from random_slugs.generate import (
+    RandomSlugConfigError,
+    format_slug,
+    generate_slug,
+    get_total_unique_slugs,
+)
+from random_slugs.words import vocabulary
 
 
 def check_word_in_category(part_of_speech, word, categories) -> bool:
@@ -60,6 +65,29 @@ class RandomSlugsTest(unittest.TestCase):
         slug2 = generate_slug()
         self.assertNotEqual(slug1, slug2)
 
+    def test_invalid_options_seed(self):
+        with self.assertRaises(RandomSlugConfigError):
+            generate_slug(options={"seed": None})
+
+    def test_invalid_options_parts_of_speech(self):
+        with self.assertRaises(RandomSlugConfigError):
+            generate_slug(options={"parts_of_speech": ["invalid"]})
+
+    def test_invalid_options_categories(self):
+        with self.assertRaises(RandomSlugConfigError):
+            generate_slug(options={"categories": {"invalid": []}})
+
+    def test_invalid_options_format(self):
+        with self.assertRaises(RandomSlugConfigError):
+            generate_slug(options={"format": "invalid"})
+
+    def test_invalid_options_seed_type(self):
+        with self.assertRaises(RandomSlugConfigError):
+            generate_slug(options={"seed": {}})
+
+    def test_empty_options_parts_of_speech_type(self):
+        generate_slug(options={"parts_of_speech": {}})
+
 
 class FormatSlugTest(unittest.TestCase):
     def test_kebab_case(self):
@@ -81,3 +109,41 @@ class FormatSlugTest(unittest.TestCase):
         words = ["red", "panda"]
         slug = format_slug(words)
         self.assertEqual(slug, "red-panda")
+
+
+class TotalUniqueSlugsTest(unittest.TestCase):
+    def setUp(self):
+        self.all_adjectives = [v[0] for v in vocabulary["adjectives"]]
+        self.all_nouns = [v[0] for v in vocabulary["nouns"]]
+        self.num_adjectives = len(self.all_adjectives)
+        self.num_nouns = len(self.all_nouns)
+
+    def test_total_unique_slugs(self):
+        num = get_total_unique_slugs()
+        total = self.num_adjectives * self.num_adjectives * self.num_nouns
+        self.assertEqual(num, total)
+
+    def test_total_in_subsets_of_categories(self):
+        options = {
+            "categories": {
+                "nouns": ["animal", "technology"],
+                "adjectives": ["color", "size"],
+            }
+        }
+        num = get_total_unique_slugs(4, options)
+        num_adjectives = len(
+            [
+                word
+                for word, categories in vocabulary["adjectives"]
+                if any(category in categories for category in options["categories"]["adjectives"])
+            ]
+        )
+        num_nouns = len(
+            [
+                word
+                for word, categories in vocabulary["nouns"]
+                if any(category in categories for category in options["categories"]["nouns"])
+            ]
+        )
+        total = num_adjectives**3 * num_nouns
+        self.assertEqual(num, total)

@@ -55,8 +55,10 @@ package-data = {"randomslugs" = ["*.txt"]}
 
 [tool.ruff]
 line-length = 100
-select = ["A", "B", "E", "F", "I"]
 target-version = "py312"
+
+[tool.ruff.lint]
+select = ["A", "B", "E", "F", "I"]
 
 [tool.pytest.ini_options]
 log_cli = true
