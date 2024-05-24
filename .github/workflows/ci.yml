@@ -34,9 +34,20 @@ jobs:
     - name: Build
       run: hatch build
 
-    - name: Publish on PyPI
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      run: hatch publish
-      env:
-        HATCH_INDEX_USER: ${{ secrets.HATCH_INDEX_USER }}
-        HATCH_INDEX_AUTH: ${{ secrets.HATCH_INDEX_AUTH }}
+    - name: Python Semantic Release
+      uses: python-semantic-release/python-semantic-release@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Update Version with Hatch
+      if: steps.release.outputs.released == 'true'
+      run: |
+        echo "Updating version to ${{ steps.release.outputs.version }}"
+        hatch version ${{ steps.release.outputs.version }}
+
+      - name: Publish on PyPI
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.release.outputs.released == 'true'
+        run: hatch publish
+        env:
+          HATCH_INDEX_USER: ${{ secrets.HATCH_INDEX_USER }}
+          HATCH_INDEX_AUTH: ${{ secrets.HATCH_INDEX_AUTH }}

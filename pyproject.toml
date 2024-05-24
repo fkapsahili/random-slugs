@@ -1,10 +1,16 @@
 [build-system]
 build-backend = "hatchling.build"
-requires = ["hatchling"]
+requires = [
+  "hatchling",
+  "hatch-semver",
+]
 
 [project]
 authors = [{name = "Fabio Kapsahili", email = "fabio.kapsahili@protonmail.com"}]
 description = "A Python package for generating random slugs using a customizable vocabulary of words."
+dynamic = [
+  "version",
+]
 equires-python = ">=3.8"
 keywords = ["sample", "setuptools", "development"]
 license = {file = "LICENSE.txt"}
@@ -13,7 +19,6 @@ maintainers = [
 ]
 name = "random-slugs"
 readme = "README.md"
-version = "1.0.0"
 
 classifiers = [
   "Intended Audience :: Developers",
@@ -26,7 +31,7 @@ classifiers = [
   "Programming Language :: Python :: 3 :: Only",
 ]
 
-dependencies = ["peppercorn"]
+dependencies = []
 
 [project.optional-dependencies]
 dev = ["check-manifest"]
@@ -39,6 +44,11 @@ test = ["coverage"]
 
 [tool.hatch]
 package-data = {"random-slugs" = ["*.txt"]}
+
+[tool.hatch.version]
+path = "random_slugs/__about__.py"
+scheme = "semver"
+validate-bump = true
 
 [tool.hatch.envs.test]
 dependencies = [
