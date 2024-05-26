@@ -2,7 +2,6 @@
 build-backend = "hatchling.build"
 requires = [
   "hatchling",
-  "hatch-semver",
 ]
 
 [project]
@@ -43,11 +42,6 @@ test = ["coverage"]
 
 [tool.hatch]
 package-data = {"random-slugs" = ["*.txt"]}
-
-[tool.hatch.version]
-path = "random_slugs/__about__.py"
-scheme = "semver"
-validate-bump = true
 
 [tool.hatch.envs.test]
 dependencies = [
