@@ -7,8 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-    name: "Build"
+  lint-and-test:
+    name: "Lint and Test"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -30,9 +30,6 @@ jobs:
 
     - name: Tests
       run: hatch run +py=${{ matrix.python-version }} test:test
-
-    - name: Build
-      run: hatch build
 
   release:
     name: "Release"
@@ -68,6 +65,9 @@ jobs:
       run: |
         echo "Updating version to ${{ steps.release.outputs.version }}"
         hatch version ${{ steps.release.outputs.version }}
+
+    - name: Build
+      run: hatch build
 
     - name: Publish on PyPI
       if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.release.outputs.released == 'true'
