@@ -43,6 +43,9 @@ test = ["coverage"]
 [tool.hatch]
 package-data = {"random-slugs" = ["*.txt"]}
 
+[tool.hatch.version]
+path = "random_slugs/__about__.py"
+
 [tool.hatch.envs.test]
 dependencies = [
   "pytest",
