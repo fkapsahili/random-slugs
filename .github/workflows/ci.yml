@@ -73,5 +73,5 @@ jobs:
       if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.release.outputs.released == 'true'
       run: hatch publish
       env:
-        HATCH_INDEX_USER: ${{ secrets.HATCH_INDEX_USER }}
+        HATCH_INDEX_USER: __token__
         HATCH_INDEX_AUTH: ${{ secrets.HATCH_INDEX_AUTH }}
