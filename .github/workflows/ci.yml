@@ -59,6 +59,10 @@ jobs:
         changelog: 'false'
         prerelease: 'false'
 
+    - name: Install hatch
+      run: |
+        python -m pip install hatch
+
     - name: Update Version with Hatch
       if: steps.release.outputs.released == 'true'
       run: |
